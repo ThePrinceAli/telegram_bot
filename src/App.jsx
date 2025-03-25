@@ -4,8 +4,9 @@ import { onlineCourses } from './data'
 
 const App = () => {
   const [courses,setCourses]=useState()
+  const [allCost, setAllCost]=useState()
   const [selectedCourse,setSelectedCourse]=useState([])
-  
+  let totalPrice=0
   const selectCourse=(num)=>{
     let newArr=[...selectedCourse]
     let newCourse=courses.find((item,index)=>index===num)
@@ -13,6 +14,9 @@ const App = () => {
       newArr.push(newCourse)
       setSelectedCourse(newArr)
     }
+    selectedCourse.map((item)=>{
+      totalPrice+=item.price
+    })
   }
   useEffect(()=>{
     setCourses(onlineCourses)
@@ -25,10 +29,13 @@ const App = () => {
         <div className="grid grid-cols-[1fr,3fr] gap-4 max-md:grid-cols-1 ">
           <div className="bg-orange-700 text-white p-4">
             {selectedCourse?selectedCourse.map((item, index) => (
-              <div key={index}>
-                <h4>{item.title}</h4>
-                <p>{item.price}</p>
-              </div>
+              <>
+                <div><p>Total price{totalPrice}</p></div>
+                <div key={index}>
+                  <h4>{item.title}</h4>
+                  <p>{item.price}</p>
+                </div>
+              </>
             )):''}
           </div>
           <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1">
