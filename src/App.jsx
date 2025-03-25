@@ -34,18 +34,18 @@ const App = () => {
         <h1 className="text-center text-4xl">STARTUM ONLINE COURSES</h1>
         <div className="grid grid-cols-[1fr,3fr] gap-4 max-md:grid-cols-1 ">
           <div className="bg-purple-600 text-white p-4">
+            {sumPriceAll() > 0 ? (
+              <h2>
+                Total price: <span>${sumPriceAll()}</span>
+              </h2>
+            ) : (
+              ""
+            )}
             {selectedCourse
               ? selectedCourse.map((item, index) => (
                   <>
                     <div>
                       <div>
-                        {sumPriceAll() > 0 ? (
-                          <h2>
-                            Total price: <span>${sumPriceAll()}</span>
-                          </h2>
-                        ) : (
-                          ""
-                        )}
                       </div>
                     </div>
                     <div key={index}>
