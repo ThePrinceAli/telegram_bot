@@ -6,17 +6,18 @@ const App = () => {
   const [courses,setCourses]=useState()
   const [allCost, setAllCost]=useState()
   const [selectedCourse,setSelectedCourse]=useState([])
-  let totalPrice=0
   const selectCourse=(num)=>{
     let newArr=[...selectedCourse]
     let newCourse=courses.find((item,index)=>index===num)
+    let totalPrice=0
+    selectedCourse.map((item)=>{
+      totalPrice+=item.price
+    })
     if(!selectedCourse.some((course)=>course.title===newCourse.title)){
       newArr.push(newCourse)
       setSelectedCourse(newArr)
     }
-    selectedCourse.map((item)=>{
-      totalPrice+=item.price
-    })
+    setAllCost(totalPrice)
   }
   useEffect(()=>{
     setCourses(onlineCourses)
@@ -30,7 +31,7 @@ const App = () => {
           <div className="bg-orange-700 text-white p-4">
             {selectedCourse?selectedCourse.map((item, index) => (
               <>
-                <div><p>Total price{totalPrice}</p></div>
+                <div><p>Total price {allCost}</p></div>
                 <div key={index}>
                   <h4>{item.title}</h4>
                   <p>{item.price}</p>
