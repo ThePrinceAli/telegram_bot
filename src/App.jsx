@@ -28,7 +28,7 @@ const App = () => {
       <div className="p-2 flex gap-10 flex-col">
         <h1 className="text-center text-4xl">STARTUM ONLINE COURSES</h1>
         <div className="grid grid-cols-[1fr,3fr] gap-4 max-md:grid-cols-1 ">
-          <div className="bg-orange-700 text-white p-4">
+          <div className="bg-purple-600 text-white p-4">
             {selectedCourse?selectedCourse.map((item, index) => (
               <>
                 <div><p>Total price {allCost}</p></div>
