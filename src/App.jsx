@@ -38,7 +38,15 @@ const App = () => {
               ? selectedCourse.map((item, index) => (
                   <>
                     <div>
-                      <p></p>
+                      <div>
+                        {sumPriceAll() > 0 ? (
+                          <h2>
+                            Total price: <span>${sumPriceAll()}</span>
+                          </h2>
+                        ) : (
+                          ""
+                        )}
+                      </div>
                     </div>
                     <div key={index}>
                       <h4>
@@ -55,15 +63,6 @@ const App = () => {
                   </>
                 ))
               : ""}
-            <div>
-              {sumPriceAll() > 0 ? (
-                <h2>
-                  Total price: <span>${sumPriceAll()}</span>
-                </h2>
-              ) : (
-                ""
-              )}
-            </div>
           </div>
           <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1">
             {courses
