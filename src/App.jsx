@@ -7,7 +7,6 @@ const App = () => {
   useEffect(() => {
     setCourses(onlineCourses);
   }, []);
-
   const selectCourse = (num) => {
     let newArr = [...selectedCourse];
     let newCourse = courses.find((item, index) => index === num);
@@ -86,7 +85,12 @@ const App = () => {
                     </p>
                     <button
                       onClick={() => selectCourse(index)}
-                      className="p-2 rounded-md bg-green-700 text-white cursor-pointer w-full"
+                      className="p-2 rounded-md text-white cursor-pointer w-full"
+                      style={{
+                        backgroundColor:selectedCourse.some(course => course.title === item.title)
+                        ? 'red'
+                        : 'green'
+                      }}
                     >
                       Buy
                     </button>
