@@ -4,8 +4,10 @@ import { onlineCourses } from "./data";
 const App = () => {
   const [courses, setCourses] = useState();
   const [selectedCourse, setSelectedCourse] = useState([]);
+  const telegram=window.Telegram.WebApp
   useEffect(() => {
     setCourses(onlineCourses);
+    telegram.ready()
   }, []);
   const selectCourse = (num) => {
     let newArr = [...selectedCourse];
@@ -27,6 +29,10 @@ const App = () => {
     newSelectedCourse.splice(num, 1);
     setSelectedCourse(newSelectedCourse);
   };
+  const buyItem=()=>{
+    telegram.MainButton.text="Buy Courses"
+    telegram.MainButton.show()
+  }
   return (
     <>
       <div className="p-2 flex gap-10 flex-col">
@@ -34,9 +40,14 @@ const App = () => {
         <div className="grid grid-cols-[1fr,3fr] gap-4 max-md:grid-cols-1 ">
           <div className="bg-purple-600 text-white p-4">
             {sumPriceAll() > 0 ? (
-              <h2>
-                Total price: <span>${sumPriceAll()}</span>
-              </h2>
+              <div>
+                <h2 className="text-2xl mb-4 bg-emerald-500 text-center p-2 rounded-md">
+                  Total price: <span>${sumPriceAll()}</span>
+                </h2>
+                <button onClick={buyItem}
+                  className="w-full bg-green-700 rounded-md h-10 text-2xl"
+                >Buy</button>
+              </div>
             ) : (
               ""
             )}
