@@ -4,20 +4,25 @@ import { onlineCourses } from "./data";
 const App = () => {
   const [courses, setCourses] = useState();
   const [selectedCourse, setSelectedCourse] = useState([]);
-  const telegram=window.Telegram.WebApp
-  const buyItem=()=>{
-    telegram.MainButton.text="Buy Courses"
-    telegram.MainButton.show()
-  }
-  const sendItems = useCallback(()=>{
-    telegram.senData(JSON.stringify(selectedCourse))
-  },[selectedCourse])
+  const telegram = window.Telegram.WebApp;
+
+  const buyItem = () => {
+    telegram.MainButton.text = "Buy Courses";
+    telegram.MainButton.show();
+  };
+
+  const sendItems = useCallback(() => {
+    telegram.sendData(JSON.stringify(selectedCourse));
+  }, [selectedCourse]);
+
   useEffect(() => {
     setCourses(onlineCourses);
     telegram.ready();
     telegram.onEvent("mainButtonClicked", sendItems);
-    return ()=> telegram.offEvent("mainButtonClicked",sendItems);
-  }, [selectedCourse,sendItems]);
+
+    return () => telegram.offEvent("mainButtonClicked", sendItems);
+  }, [selectedCourse, sendItems]);
+  
   const selectCourse = (num) => {
     let newArr = [...selectedCourse];
     let newCourse = courses.find((item, index) => index === num);
@@ -49,9 +54,12 @@ const App = () => {
                 <h2 className="text-2xl mb-4 bg-emerald-500 text-center p-2 rounded-md">
                   Total price: <span>${sumPriceAll()}</span>
                 </h2>
-                <button onClick={buyItem}
+                <button
+                  onClick={buyItem}
                   className="w-full bg-green-700 rounded-md h-10 text-2xl"
-                >Buy</button>
+                >
+                  Buy
+                </button>
               </div>
             ) : (
               ""
@@ -60,8 +68,7 @@ const App = () => {
               ? selectedCourse.map((item, index) => (
                   <>
                     <div>
-                      <div>
-                      </div>
+                      <div></div>
                     </div>
                     <div key={index}>
                       <h4>
@@ -103,9 +110,11 @@ const App = () => {
                       onClick={() => selectCourse(index)}
                       className="p-2 rounded-md text-white cursor-pointer w-full"
                       style={{
-                        backgroundColor:selectedCourse.some(course => course.title === item.title)
-                        ? 'red'
-                        : 'green'
+                        backgroundColor: selectedCourse.some(
+                          (course) => course.title === item.title
+                        )
+                          ? "red"
+                          : "green",
                       }}
                     >
                       Buy
