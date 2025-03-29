@@ -1,14 +1,23 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { onlineCourses } from "./data";
 
 const App = () => {
   const [courses, setCourses] = useState();
   const [selectedCourse, setSelectedCourse] = useState([]);
   const telegram=window.Telegram.WebApp
+  const buyItem=()=>{
+    telegram.MainButton.text="Buy Courses"
+    telegram.MainButton.show()
+  }
+  const sendItems = useCallback(()=>{
+    telegram.senData(JSON.stringify(selectedCourse))
+  },[selectedCourse])
   useEffect(() => {
     setCourses(onlineCourses);
-    telegram.ready()
-  }, []);
+    telegram.ready();
+    telegram.onEvent("mainButtonClicked", sendItems);
+    return ()=> telegram.offEvent("mainButtonClicked",sendItems);
+  }, [selectedCourse,sendItems]);
   const selectCourse = (num) => {
     let newArr = [...selectedCourse];
     let newCourse = courses.find((item, index) => index === num);
@@ -29,10 +38,6 @@ const App = () => {
     newSelectedCourse.splice(num, 1);
     setSelectedCourse(newSelectedCourse);
   };
-  const buyItem=()=>{
-    telegram.MainButton.text="Buy Courses"
-    telegram.MainButton.show()
-  }
   return (
     <>
       <div className="p-2 flex gap-10 flex-col">
